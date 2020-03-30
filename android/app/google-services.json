@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "994001165998",
+    "firebase_url": "https://homeminister-cd6fb.firebaseio.com",
+    "project_id": "homeminister-cd6fb",
+    "storage_bucket": "homeminister-cd6fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994001165998:android:b25c633a3e11194184173f",
+        "android_client_info": {
+          "package_name": "com.homeminister"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994001165998-k6d0eveevena0oja01drjl2qk0ts6mqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUplF2Y01qldJnFJ2I_hux4m4PMpSB11s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994001165998-k6d0eveevena0oja01drjl2qk0ts6mqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

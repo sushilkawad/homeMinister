@@ -1,114 +1,62 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useEffect} from 'react';
+import {Container} from 'native-base';
+import {Provider} from 'react-redux';
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import Home from './src/components/screens/home';
+import Login from './src/components/screens/login';
+import Register from './src/components/screens/registration';
+import Profile from './src/components/screens/profile';
+import About from './src/components/screens/about';
+import Contact from './src/components/screens/contact';
+import store from './src/redux/Store';
+import {getPersistData, removePersistData} from './src/constants';
+import Sidebar from './src/components/common/sidebar';
+import actions from './src/redux/Action';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
+  const {Screen, Navigator} = createDrawerNavigator();
 
-const App: () => React$Node = () => {
+  useEffect(() => {
+    getPersistData('email').then(email => {
+      console.log('persistEmail::', email);
+      if (email) {
+        console.log(email);
+      } else {
+        actions.logout();
+        removePersistData('email');
+      }
+    });
+  }, []);
+
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <Provider store={store}>
+      <Container>
+        <NavigationContainer>
+          <Navigator
+            initialRouteName="Home"
+            drawerContent={props => <Sidebar {...props} />}>
+            <Screen name="Home" component={Home} />
+            <Screen name="Profile" component={Profile} />
+            <Screen name="Login" component={Login} />
+            <Screen name="Registration" component={Register} />
+            <Screen
+              name="About"
+              options={{title: 'About Us'}}
+              component={About}
+            />
+            <Screen
+              name="Contact"
+              options={{title: 'Contact Us'}}
+              component={Contact}
+            />
+          </Navigator>
+        </NavigationContainer>
+      </Container>
+    </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;
